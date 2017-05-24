@@ -17,8 +17,13 @@ else
 OS=linux
 endif
 else
+ifneq (,$(findstring CYGWIN,$(UNAME)))
+CMD_MKDIR=mkdir -p "$(1)"
+CMD_RMDIR=rm -r "$(1)"
+else
 CMD_MKDIR=cmd /C "if not exist "$(subst /,\,$(1))" mkdir "$(subst /,\,$(1))""
 CMD_RMDIR=cmd /C "if exist "$(subst /,\,$(1))" rmdir /S /Q "$(subst /,\,$(1))""
+endif
 OS=windows
 endif
 
